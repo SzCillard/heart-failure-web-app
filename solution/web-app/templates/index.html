@@ -1,123 +1,25 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>Heart Failure Prediction</title>
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
-    </head>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medical site</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="icon" type="image/x-icon" href="../icons/healthcare.png">
+</head>
+<body>
     <nav>
-      <ul id="navbar">
-          <li><a href="/">Home</a></li>
-          <li><a href="/patients">Patients</a></li>
-          <li><a href="/heart">Heart</a></li>
-      </ul>
+        <ul class="navbar">
+            <li><a href="{{ url_for('home') }}">Home</a></li>
+            <li><a href="{{ url_for('patients') }}">Patients</a></li>
+        </ul>
     </nav>
-    <body>
-            <h1>Health informations</h1>
-    
-            <form action="{{ url_for('predict')}}" method="post">
-              <table id="heart_table">
-                <tr>
-                  <td>Age: </td>
-                  <td><input type="number" name="Age" placeholder="Age" required="required" min="0" max="120" /></td>
-                  <td>Sex: </td>
-                  <td>
-                    <select id="Sex" name="Sex" aria-placeholder="Male">
-                    <option value="1">Female</option>
-                    <option value="0">Male</option>
-                    </select>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Chest Pain Type</td>
-                  <td>
-                    <select id="ChestPainType" name="ChestPainType">
-                    <option value="TA">TA</option>
-                    <option value="ATA">ATA</option>
-                    <option value="NAP">NAP</option>
-                    <option value="ASY">ASY</option>
-                    </select>
-                  </td>
-                  <td>
-                    Resting BP
-                  </td>
-                  <td>
-                    <input type="number" name="RestingBP" placeholder="RestingBP" required="required" min="0" max="200" />
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    Cholesterol
-                  </td>
-                  <td>
-                    <input type="number" name="Cholesterol" placeholder="Cholesterol" required="required" min="0" max="500"/>
-                  </td>
-                  <td>
-                    Fasting BS
-                  </td>
-                  <td>
-                    <input type="number" name="FastingBS" placeholder="FastingBS" required="required"/>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    Resting ECG
-                  </td>
-                  <td>
-                    <select id="RestingECG" name="RestingECG" aria-placeholder="Normal">
-                      <option value="ST">ST</option>
-                      <option value="Normal">Normal</option>
-                      <option value="LVH">LVH</option>
-                    </select>
-                  </td>
-                  <td>
-                    Max HR
-                  </td>
-                  <td>
-                    <input type="number" name="MaxHR" placeholder="MaxHR" required="required" min="60" max="202" />
-                  </td>
-                </tr>
-                <tr>
-                 
-                  <td>
-                    Exercise Angina
-                  </td>
-                  <td>
-                    <select id="ExerciseAngina" name="ExerciseAngina" aria-placeholder="N">
-                      <option value="1">Yes</option>
-                      <option value="0">No</option>
-                    </select>
-                  </td>
-                  <td>
-                    Old Peak
-                  </td>
-                  <td>
-                    <input type="number" name="Oldpeak" placeholder="Oldpeak" required="required" min="0" max="200" />
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    ST Slope
-                  </td>
-                  <td>
-                    <select id="ST_Slope" name="ST_Slope" aria-placeholder="Flat">
-                      <option value="Up">Upsloping</option>
-                      <option value="Flat">Flat</option>
-                      <option value="Down">Downsloping</option>
-                    </select>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <button id="submit_btn" type="submit" >Submit & See Result</button>
-                  </td>
-                  <td>
-                    <b>Prediction: {{ prediction_text }}</b>
-                  </td>
-                </tr>
-              </table>
-            </form>
-  
-      </body>
-      <footer class="footer"></footer>
-    </html>
+
+    <h1>Welcome to the Medical Site</h1>
+
+    <!-- Content of the home page -->
+    <p>Use the navigation bar to go to different pages.</p>
+
+    <footer class="footer"></footer>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Search</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='../icons/healthcare.png') }}">
+</head>
+<body>
+    <nav>
+        <ul class="navbar">
+            <li><a href="{{ url_for('home') }}">Home</a></li>
+            <li><a href="{{ url_for('patients') }}">Patients</a></li>
+        </ul>
+    </nav>
+   <div class="search-register-grid-container">
+    <div>
+        <h1>Search Patient</h1>   
+        <form action="{{ url_for('search_patient') }}" method="get">
+            <input type="text" name="query" placeholder="Patient first name..." required>
+            <input type="text" name="query" placeholder="Patient last name..." required>
+            <button class="submit_btn" type="submit">Search</button>
+        </form>
+    </div>
+    <div>
+        <h1>Register New Patient</h1>   
+        <form action="{{ url_for('register_patient') }}" method="post">
+            <input type="text" name="first_name" placeholder="Patient first name..." required>
+            <input type="text" name="last_name" placeholder="Patient last name..." required>
+            <input type="text" name="place_of_birth" placeholder="Place of birth..." required>
+            <br>
+            Sex
+            <select id="sex" name="sex">
+                <option value="0">Male</option>
+                <option value="1">Female</option>
+            </select>
+            <br>
+            Date of birth
+            <input type="date" name="date_of_birth" required>
+            <br>
+            <button class="submit_btn" type="submit">Register</button>
+        </form>        
+    </div>
+   </div>
+
+    {% if patients %}
+    <table class="patients_table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Sex</th>
+                <th>Date of birth</th>
+                <th>Place of birth</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for patient in patients %}
+            <tr>
+                <td><a href="{{ url_for('heart') }}">{{ patient.name }}</a></td>
+                <td>{{ 'Male' if patient.sex == 'M' else 'Female' }}</td>
+                <td>{{ patient.date_of_birth }}</td>
+                <td>{{ patient.place_of_birth }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+        <p>No patients found.</p>
+    {% endif %}
+
+    <footer class="footer"></footer>
+</body>
+</html>
