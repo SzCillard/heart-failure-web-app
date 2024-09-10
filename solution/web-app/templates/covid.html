@@ -18,11 +18,11 @@
     </nav>
 
     <h1>Lungs Info</h1>
-
-    <form action="{{ url_for('predict_lungs') }}" method="post">
-       
+    <form action="{{ url_for('predict_lungs') }}" method="post" enctype="multipart/form-data">
+       <input type="file" name="image_file"><br><br>
+       <button type="submit" class="submit_btn">Upload & Analyze</button>
     </form>
-  
+  <p><b>Result: {{ prediction_text }}</b></p>
 </body>
 <footer class="footer"></footer>
 </html>
