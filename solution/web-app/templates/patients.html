@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Patient Search</title>
+    <title>Patients</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
     <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='/icons/healthcare.png') }}">
 </head>
@@ -57,7 +57,7 @@
         <tbody>
             {% for patient in patients %}
             <tr>
-                <td><a href="{{ url_for('heart') }}">{{ patient.name }}</a></td>
+                <td><a href="{{ url_for('heart') }}" target="_blank">{{ patient.name }}</a></td>
                 <td>{{ 'Male' if patient.sex == 'M' else 'Female' }}</td>
                 <td>{{ patient.date_of_birth }}</td>
                 <td>{{ patient.place_of_birth }}</td>

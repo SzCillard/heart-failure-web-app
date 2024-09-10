@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Heart Information</title>
+    <title>Heart Disease</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
     <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='/icons/healthcare.png') }}">
 </head>
@@ -12,14 +12,14 @@
         <ul class="navbar">
             <li><a href="{{ url_for('home') }}">Home</a></li>
             <li><a href="{{ url_for('patients') }}">Patients</a></li>
-            <li><a href="#">Heart</a></li>
-            <li><a href="#">Covid</a></li>
+            <li><a href="{{ url_for('heart') }}">Heart</a></li>
+            <li><a href="{{ url_for('covid') }}">Covid</a></li>
         </ul>
     </nav>
 
-    <h1>Health Information</h1>
+    <h1>Heart Disease</h1>
 
-    <form action="{{ url_for('predict') }}" method="post">
+    <form action="{{ url_for('predict_heart') }}" method="post">
         <table class="heart_table">
                 <tr>
                   <td>Age: </td>
@@ -116,7 +116,7 @@
                     <button class="submit_btn" type="submit" >Submit & See Result</button>
                   </td>
                   <td>
-                    <b>Prediction: {{ prediction_text }}</b>
+                    <b>Heart disease prediction: {{ prediction_text }}</b>
                   </td>
                 </tr>
               </table>

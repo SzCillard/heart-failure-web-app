@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Medical Site</title>
+    <title>Lungs Info</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
     <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='/icons/healthcare.png') }}">
 </head>
@@ -12,13 +12,17 @@
         <ul class="navbar">
             <li><a href="{{ url_for('home') }}">Home</a></li>
             <li><a href="{{ url_for('patients') }}">Patients</a></li>
+            <li><a href="{{ url_for('heart') }}">Heart</a></li>
+            <li><a href="{{ url_for('covid') }}">Covid</a></li>
         </ul>
     </nav>
 
-    <h1>Welcome to the Medical Site</h1>
+    <h1>Lungs Info</h1>
 
-   
-
-    <footer class="footer"></footer>
+    <form action="{{ url_for('predict_lungs') }}" method="post">
+       
+    </form>
+  
 </body>
+<footer class="footer"></footer>
 </html>
