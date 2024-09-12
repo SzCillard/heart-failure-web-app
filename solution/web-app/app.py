@@ -1,6 +1,7 @@
 import pickle
 import numpy as np
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, redirect, url_for
+from flask_sqlalchemy import SQLAlchemy
 from PIL import Image
 from keras.models import load_model
 from keras.layers import TFSMLayer
@@ -8,13 +9,26 @@ import tensorflow as tf
 
 app = Flask(__name__)
 
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:@localhost/medical_site'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+db = SQLAlchemy(app)
+
+# Adatbázis modell létrehozása
+class Patient(db.Model):
+    __tablename__ = 'patients'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(255), nullable=False)
+    sex = db.Column(db.Enum('M', 'F'), nullable=False)
+    place_of_birth = db.Column(db.String(255))
+    date_of_birth = db.Column(db.Date)
+
+    def __repr__(self):
+        return f"<Patient {self.name}>"
+
 heart_model = pickle.load(open("../heart-failure_model.pkl", "rb"))
 lungs_model = load_model('../lungs_class_model.keras')
 
-patients_data = [
-    {"name": "John Doe", "sex": "M", "place_of_birth": "Seattle", "date_of_birth": "1999-01-01"},
-    {"name": "Jane Smith", "sex": "F", "place_of_birth": "Washington", "date_of_birth": "1998-01-28"},
-]
 
 @app.route("/")
 def home():
@@ -22,13 +36,15 @@ def home():
 
 @app.route("/patients")
 def patients():
-    return render_template("patients.html", patients=patients_data)
+    all_patients = Patient.query.all()
+    return render_template("patients.html", patients=all_patients)
 
 @app.route("/search_patient", methods=["GET"])
 def search_patient():
     query = request.args.get('query', '').lower()
-    filtered_patients = [p for p in patients_data if query in p['name'].lower()]
+    filtered_patients = Patient.query.filter(Patient.name.ilike(f'%{query}%')).all()
     return render_template("patients.html", patients=filtered_patients)
+
 
 @app.route("/register_patient", methods=["POST"])
 def register_patient():
@@ -37,18 +53,16 @@ def register_patient():
     sex = request.form.get("sex")
     place_of_birth = request.form.get("place_of_birth")
     date_of_birth = request.form.get("date_of_birth")
-    
+
     full_name = f"{first_name} {last_name}"
-    
-    new_patient = {
-        "name": full_name,
-        "sex": "M" if sex == "0" else "F",
-        "place_of_birth": place_of_birth,
-        "date_of_birth": date_of_birth,
-    }
-    patients_data.append(new_patient)
-    
-    return render_template("patients.html", patients=patients_data)
+
+    new_patient = Patient(name=full_name, sex="M" if sex == "0" else "F",
+                          place_of_birth=place_of_birth, date_of_birth=date_of_birth)
+    db.session.add(new_patient)
+    db.session.commit()
+
+    return redirect(url_for("patients"))
+    #return render_template("patients.html", patients=patients_data)
 
 @app.route("/heart")
 def heart():
